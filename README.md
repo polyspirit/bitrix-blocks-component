@@ -1,2 +1,2 @@
 # bitrix-blocks-component
-Simple blocks component for bitrix
+Simple caching component for bitrix
