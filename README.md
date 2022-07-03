@@ -3,12 +3,13 @@ Simple caching component for bitrix
 
 ## How to install
 Put all files to 
-`/local/templates/%template_name%/components/%your_namespace%/blocks/`
+`/local/components/%your_namespace%/blocks/`
 For example:
-`/local/templates/main/components/other/blocks/`
+`/local/components/other/blocks/`
 
-Then create some templetes directories. 
-For example: **news.list**
+Then create some templates directories in your theme template directory.
+`/local/templates/%template_name%/components/%your_namespace%/blocks/news.list/`
+For example:
 `/local/templates/main/components/other/blocks/news.list/`
 
 Then create **result_modifier.php** and **template.php** in the same directory.
@@ -25,7 +26,7 @@ $APPLICATION->IncludeComponent(
         'CACHE_TIME' => 3600,
         'CACHE_TIME_DB' => '3600',
         'CACHE_GROUPS' => 'N',
-        'CACHE_SALT' => '#news.list.001'
+        'CACHE_SALT' => '#news.list.001' // some unique string
         ... // your parameters will be stored in $arParams variable
     ]
 );
