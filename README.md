@@ -15,6 +15,8 @@ For example:
 Then create **template.php** in the same directory.
 Create **result.php** or **result_modifier.php** for getting and modifying data.
 
+The difference between **result.php** and **result_modifier.php** is that **result.php** includes into **class.php** file and can be used in Bitrix Modify mode.
+
 ## How to include
 
 You can use this code wherever you want.
