@@ -12,7 +12,8 @@ Then create some templates directories in your theme template directory.
 For example:
 `/local/templates/main/components/other/blocks/news.list/`
 
-Then create **result_modifier.php** and **template.php** in the same directory.
+Then create **template.php** in the same directory.
+Create **result.php** or **result_modifier.php** for getting and modifying data.
 
 ## How to include
 
@@ -32,7 +33,7 @@ $APPLICATION->IncludeComponent(
 );
 ```
 
-## result_modifier.php example
+## result_modifier.php or **result.php** example
 
 ```php
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
@@ -62,4 +63,27 @@ $arResult['NEWS'] = $iBlock->active()
 foreach ($arResult['NEWS'] as $newsItem) {
     // some code
 }
+```
+
+## Bitrix Modify mode
+
+To enable this mode add to **result.php** IBLOCK_ID:
+
+```php
+$arResult['IBLOCK_ID'] = CURRENT_IBLOCK_ID;
+```
+
+And add this id attribute to parent html-tag in **template.php**
+
+```php
+<div class="parent-container" id="<?php echo $this->GetEditAreaId($arResult['AREA_ID']); ?>">
+    ...
+</div>
+```
+
+Also you can add SECTION_ID and ELEMENT_ID if you need:
+
+```php
+$arResult['SECTION_ID'] = CURRENT_SECTION_ID;
+$arResult['ID'] = CURRENT_ELEMENT_ID;
 ```
