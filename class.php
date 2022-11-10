@@ -176,7 +176,7 @@ class Blocks extends \CBitrixComponent implements \Bitrix\Main\Engine\Contract\C
         ];
         
         $this->iBlock = new ISection($arParams['IBLOCK_ID']);
-        $this->arResult['ITEMS'] = $this->iBlock->params($params)->getElements();
+        $this->arResult['ITEMS'] = $this->iBlock->sortReset()->params($params)->getElements();
         $this->arResult['IBLOCK_ID'] = $this->iBlock->getIblockId();
     }
 
