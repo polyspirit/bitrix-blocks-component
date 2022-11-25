@@ -137,7 +137,7 @@ class Blocks extends \CBitrixComponent implements \Bitrix\Main\Engine\Contract\C
         }
 
         $this->iBlock = new IBlock($arParams['IBLOCK_ID']);
-        $this->arResult['ITEMS'] = $this->iBlock->params($params)->getElements($fileHandle);
+        $this->arResult['ITEMS'] = $this->iBlock->sortReset()->params($params)->getElements($fileHandle);
         $this->arResult['IBLOCK_ID'] = $this->iBlock->getIblockId();
     }
 
@@ -188,13 +188,13 @@ class Blocks extends \CBitrixComponent implements \Bitrix\Main\Engine\Contract\C
             return false;
         }
 
-        $this->arResult['AREA_ID'] = $this->arResult['ID'] ?? $this->arResult['IBLOCK_ID'];
+        $this->arResult['AREA_ID'] = $this->arResult['ID'] ?? $this->arResult['SECTION_ID'] ?? $this->arResult['IBLOCK_ID'];
 
         $arButtons = \CIBlock::GetPanelButtons(
             $this->arResult['IBLOCK_ID'],
             $this->arResult['ID'] ?? 0,
             $this->arResult['SECTION_ID'] ?? 0,
-            ['SECTION_BUTTONS' => false, 'SESSID' => false]
+            ['SECTION_BUTTONS' => true, 'SESSID' => false]
         );
 
         $APPLICATION->SetEditArea(
