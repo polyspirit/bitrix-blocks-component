@@ -79,8 +79,6 @@ class Blocks extends \CBitrixComponent implements \Bitrix\Main\Engine\Contract\C
 
     protected function getResult()
     {
-        global $APPLICATION;
-
         $arParams = $this->arParams;
 
         if (!empty($arParams['IBLOCK_ID'])) {
@@ -114,7 +112,7 @@ class Blocks extends \CBitrixComponent implements \Bitrix\Main\Engine\Contract\C
         }
     }
 
-    private function getList(): void
+    public function getList(): void
     {
         $arParams = $this->arParams;
 
@@ -137,11 +135,21 @@ class Blocks extends \CBitrixComponent implements \Bitrix\Main\Engine\Contract\C
         }
 
         $this->iBlock = new IBlock($arParams['IBLOCK_ID']);
-        $this->arResult['ITEMS'] = $this->iBlock->sortReset()->params($params)->getElements($fileHandle);
+        $this->arResult['ITEMS'] = $this->iBlock->params($params)->getElements($fileHandle);
         $this->arResult['IBLOCK_ID'] = $this->iBlock->getIblockId();
+
+        if (!empty($this->arParams['PAGINATION'])) {
+            $this->arResult['NAV_STRING'] = $this->iBlock->getObResult()->GetPageNavStringEx(
+                $navComponentObject,
+                '1',
+                $this->arParams['NAV_TEMPLATE'] ?: 'news.list.pagenavigation',
+                'N',
+                $this->__component
+            );
+        }
     }
 
-    private function getDetail(): void
+    public function getDetail(): void
     {
         $arParams = $this->arParams;
 
@@ -164,7 +172,7 @@ class Blocks extends \CBitrixComponent implements \Bitrix\Main\Engine\Contract\C
         $this->arResult['ID'] = $this->arResult['ITEM']['ID'];
     }
 
-    private function getSections(): void
+    public function getSections(): void
     {
         $arParams = $this->arParams;
 
@@ -176,7 +184,7 @@ class Blocks extends \CBitrixComponent implements \Bitrix\Main\Engine\Contract\C
         ];
         
         $this->iBlock = new ISection($arParams['IBLOCK_ID']);
-        $this->arResult['ITEMS'] = $this->iBlock->sortReset()->params($params)->getElements();
+        $this->arResult['ITEMS'] = $this->iBlock->params($params)->getElements();
         $this->arResult['IBLOCK_ID'] = $this->iBlock->getIblockId();
     }
 
